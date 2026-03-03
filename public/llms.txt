@@ -1,0 +1,14 @@
+# AI架空ショップ (ai-kaukau)
+> AIが生成した架空の商品を架空で購入できるECサイト
+
+## MCP (Model Context Protocol)
+- Endpoint: https://ai-kaukau.ezoai.jp/api/mcp
+- Tools: generate_product, buy_product
+
+## 概要
+AI架空ショップは、AIが完全に架空の商品を生成し、ユーザーがそれを架空で購入できるサービスです。
+商品には架空の説明、架空の価格、架空のレビューが付いています。
+架空購入するとレシートが発行されます。
+
+## カテゴリ
+家電, 食品, ファッション, ガジェット, 美容, スポーツ, ペット用品, 文房具, インテリア, おもちゃ
