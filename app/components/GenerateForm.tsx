@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Spinner } from "@/app/components/spell/Spinner";
 
 const CATEGORIES = [
   "家電",
@@ -93,7 +94,14 @@ export function GenerateForm() {
         disabled={loading || !category}
         className="w-full bg-emerald-500 hover:bg-emerald-400 disabled:bg-white/10 disabled:text-white/30 text-black font-bold py-4 rounded-lg transition-all duration-200 text-lg"
       >
-        {loading ? "架空の商品を生成中..." : "架空の商品を生成する"}
+        {loading ? (
+          <span className="flex items-center justify-center gap-2">
+            <Spinner size="sm" className="text-black" />
+            架空の商品を生成中...
+          </span>
+        ) : (
+          "架空の商品を生成する"
+        )}
       </button>
     </form>
   );
