@@ -35,13 +35,19 @@ const services = [
     name: "AI面接練習",
     desc: "模擬面接S-D判定",
     url: "https://ai-interview.ezoai.jp",
-    accent: "text-yellow-400",
+    accent: "text-violet-400",
+  },
+  {
+    name: "AI競プロ",
+    desc: "AIのコーディング対決",
+    url: "https://ai-competitive-programming.ezoai.jp",
+    accent: "text-cyan-400",
   },
   {
     name: "AI架空ショップ",
     desc: "架空商品を架空購入",
     url: "https://ai-kaukau.ezoai.jp",
-    accent: "text-emerald-400",
+    accent: "text-cyan-400",
   },
 ];
 
