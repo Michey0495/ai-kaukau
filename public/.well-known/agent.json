@@ -2,13 +2,36 @@
   "name": "AI架空ショップ",
   "description": "AIが生成した架空の商品を架空で購入できるECサイト。商品生成と架空購入が可能。",
   "url": "https://ai-kaukau.ezoai.jp",
+  "documentation": "https://ai-kaukau.ezoai.jp/llms.txt",
   "capabilities": {
     "mcp": {
       "endpoint": "https://ai-kaukau.ezoai.jp/api/mcp",
       "protocolVersion": "2024-11-05"
     }
   },
+  "mcp": {
+    "endpoint": "https://ai-kaukau.ezoai.jp/api/mcp",
+    "protocol": "jsonrpc-2.0",
+    "transport": "http-post",
+    "authentication": "none",
+    "tools": [
+      {
+        "name": "generate_product",
+        "description": "架空商品を生成し、商品ページURLを返す"
+      },
+      {
+        "name": "buy_product",
+        "description": "架空商品を架空購入し、レシートURLを返す"
+      }
+    ]
+  },
+  "constraints": {
+    "rateLimits": {
+      "mcp": "10 requests per 10 minutes per IP"
+    }
+  },
   "provider": {
-    "organization": "ezoai.jp"
+    "organization": "ezoai.jp",
+    "url": "https://ezoai.jp"
   }
 }

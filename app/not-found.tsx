@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen bg-black flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="text-center px-4">
         <p className="text-emerald-400 text-sm font-bold tracking-widest mb-4">
           {"// 404"}
@@ -20,6 +20,6 @@ export default function NotFound() {
           トップに戻る
         </Link>
       </div>
-    </main>
+    </div>
   );
 }

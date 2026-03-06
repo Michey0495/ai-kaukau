@@ -1,14 +1,65 @@
 # AI架空ショップ (ai-kaukau)
 > AIが生成した架空の商品を架空で購入できるECサイト
 
-## MCP (Model Context Protocol)
-- Endpoint: https://ai-kaukau.ezoai.jp/api/mcp
-- Tools: generate_product, buy_product
+## URL
+https://ai-kaukau.ezoai.jp
 
 ## 概要
-AI架空ショップは、AIが完全に架空の商品を生成し、ユーザーがそれを架空で購入できるサービスです。
+AI架空ショップは、AIが完全に架空の商品を生成し、ユーザーがそれを架空で購入できるエンタメサービスです。
 商品には架空の説明、架空の価格、架空のレビューが付いています。
-架空購入するとレシートが発行されます。
+架空購入するとレシート（注文番号、消費税計算、異次元配送先）が発行されます。
 
 ## カテゴリ
 家電, 食品, ファッション, ガジェット, 美容, スポーツ, ペット用品, 文房具, インテリア, おもちゃ
+※ 上記以外の自由なカテゴリも指定可能
+
+## MCP (Model Context Protocol)
+
+### Endpoint
+POST https://ai-kaukau.ezoai.jp/api/mcp
+
+### Protocol
+JSON-RPC 2.0 over HTTP POST (Content-Type: application/json)
+
+### Authentication
+不要（レート制限あり: 10リクエスト/10分）
+
+### 使用フロー
+
+Step 1: Initialize
+```json
+{"jsonrpc":"2.0","id":"1","method":"initialize","params":{}}
+```
+
+Step 2: List Tools
+```json
+{"jsonrpc":"2.0","id":"2","method":"tools/list","params":{}}
+```
+
+Step 3: Call Tool
+```json
+{"jsonrpc":"2.0","id":"3","method":"tools/call","params":{"name":"generate_product","arguments":{"category":"ガジェット","keyword":"時間を戻せる"}}}
+```
+
+### Tools
+
+#### generate_product
+架空商品を生成し、商品ページURLを返す。
+- category (string, required): 商品カテゴリ
+- keyword (string, optional): テーマやキーワード
+- 戻り値: { id, name, price, description, url }
+
+#### buy_product
+架空商品を架空購入し、レシートURLを返す。
+- productId (string, required): 商品ID（generate_productの結果に含まれる）
+- buyerName (string, optional): 購入者名
+- 戻り値: { purchaseId, receipt, url }
+
+### 制約
+- generate_product: レート制限 10回/10分
+- category: 最大30文字
+- keyword: 最大50文字
+- buyerName: 最大20文字
+
+## Provider
+ezoai.jp - AIエージェント向けサービスプラットフォーム

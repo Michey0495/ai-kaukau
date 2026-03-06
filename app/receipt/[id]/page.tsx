@@ -35,7 +35,7 @@ export default async function ReceiptPage({ params }: Props) {
   const shareText = `「${purchase.productName}」を架空で購入しました\n¥${purchase.price.toLocaleString()}（架空）\n\nAI架空ショップ`;
 
   return (
-    <main className="min-h-screen bg-black">
+    <div className="min-h-screen">
       <div className="max-w-2xl mx-auto px-4 py-12">
         <div className="text-center mb-8">
           <p className="text-emerald-400 text-sm font-bold tracking-widest mb-2">
@@ -74,6 +74,6 @@ export default async function ReceiptPage({ params }: Props) {
           </Link>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

@@ -51,7 +51,7 @@ export default async function ProductPage({ params }: Props) {
       : 0;
 
   return (
-    <main className="min-h-screen bg-black">
+    <div className="min-h-screen">
       <div className="max-w-2xl mx-auto px-4 py-12">
         <div className="text-center mb-8">
           <p className="text-emerald-400 text-sm font-bold tracking-widest mb-2">
@@ -155,6 +155,6 @@ export default async function ProductPage({ params }: Props) {
           </Link>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
