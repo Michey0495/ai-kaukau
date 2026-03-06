@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { GenerateForm } from "./components/GenerateForm";
 import { RecentProducts } from "./components/RecentProducts";
+import { ShimmerText } from "./components/spell/ShimmerText";
 
 export default function HomePage() {
   return (
@@ -15,9 +16,9 @@ export default function HomePage() {
         </div>
 
         <div className="relative text-center px-4 animate-[fade-in-up_0.8s_ease-out]">
-          <p className="text-emerald-400/80 text-xs font-mono tracking-[0.3em] uppercase mb-6">
+          <ShimmerText variant="emerald" className="text-xs font-mono tracking-[0.3em] uppercase mb-6">
             AI Fake Shop
-          </p>
+          </ShimmerText>
           <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-[1.1]">
             AI架空ショップ
           </h1>
