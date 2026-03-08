@@ -39,6 +39,7 @@ export async function GET(request: NextRequest) {
         description: p.description.slice(0, 100),
         category: p.category,
         likes: likeCounts[i] ?? 0,
+        imageUrl: p.imageUrl,
       }));
 
     const hasMore = ids.length === limit + 1;

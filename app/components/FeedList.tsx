@@ -10,6 +10,7 @@ interface FeedItem {
   description: string;
   category: string;
   likes: number;
+  imageUrl?: string;
 }
 
 interface Props {
@@ -109,8 +110,16 @@ export function FeedList({ initialItems, initialNextCursor }: Props) {
           <Link
             key={item.id}
             href={`/product/${item.id}`}
-            className="block bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-200"
+            className="flex gap-4 bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-200"
           >
+            {item.imageUrl && (
+              <img
+                src={item.imageUrl}
+                alt=""
+                className="w-16 h-16 rounded-lg object-cover shrink-0 border border-white/10"
+              />
+            )}
+            <div className="min-w-0 flex-1">
             <div className="flex items-start justify-between mb-2">
               <p className="text-white font-bold text-base line-clamp-1">
                 {item.name}
@@ -127,6 +136,7 @@ export function FeedList({ initialItems, initialNextCursor }: Props) {
               {item.likes > 0 && (
                 <span className="text-white/30 text-xs">+{item.likes}</span>
               )}
+            </div>
             </div>
           </Link>
         ))}

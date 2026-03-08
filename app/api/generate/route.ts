@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { nanoid } from "nanoid";
 import { generateProductData } from "@/app/lib/ai";
+import { generateImage } from "@/app/lib/image-gen";
 import type { Product } from "@/app/types";
 
 const RATE_LIMIT = 5;
@@ -68,11 +69,23 @@ export async function POST(req: NextRequest) {
   try {
     const parsed = await generateProductData(category, keyword);
     const id = nanoid(10);
+
+    let imageUrl: string | undefined;
+    try {
+      imageUrl = await generateImage(
+        `Product photo of "${parsed.name}": ${parsed.description}. Professional e-commerce product photography, white background, studio lighting`,
+        { width: 512, height: 512 }
+      );
+    } catch {
+      // Image generation is optional
+    }
+
     const product: Product = {
       id,
       ...parsed,
       category,
       keyword,
+      imageUrl,
       createdAt: new Date().toISOString(),
     };
 

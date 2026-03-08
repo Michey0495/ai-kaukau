@@ -9,6 +9,7 @@ export function sanitizeInput(input: string, maxLength: number): string {
 const OLLAMA_URL = process.env.OLLAMA_URL || "http://localhost:11434";
 const OLLAMA_MODEL = process.env.OLLAMA_MODEL || "qwen2.5:1.5b";
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const TOGETHER_API_KEY = process.env.TOGETHER_API_KEY;
 
 async function callAI(prompt: string): Promise<string> {
   if (ANTHROPIC_API_KEY) {
@@ -23,23 +24,42 @@ async function callAI(prompt: string): Promise<string> {
     return block.type === "text" ? block.text : "";
   }
 
-  const res = await fetch(`${OLLAMA_URL}/api/chat`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      model: OLLAMA_MODEL,
-      messages: [{ role: "user", content: prompt }],
-      stream: false,
-      options: { num_ctx: 2048, temperature: 0.7 },
-    }),
-  });
+  // Ollama (local or Cloudflare Tunnel)
+  try {
+    const res = await fetch(`${OLLAMA_URL}/api/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: OLLAMA_MODEL,
+        messages: [{ role: "user", content: prompt }],
+        stream: false,
+        options: { num_ctx: 2048, temperature: 0.7 },
+      }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data.message?.content ?? "";
+    }
+  } catch {}
 
-  if (!res.ok) {
-    throw new Error(`AI server error: ${res.status}`);
+  // Together AI fallback
+  if (TOGETHER_API_KEY) {
+    const res = await fetch("https://api.together.xyz/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${TOGETHER_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "Qwen/Qwen2.5-7B-Instruct-Turbo",
+        messages: [{ role: "user", content: prompt }],
+      }),
+    });
+    const data = await res.json();
+    return data.choices?.[0]?.message?.content ?? "";
   }
 
-  const data = await res.json();
-  return data.message?.content ?? "";
+  throw new Error("AI backend unavailable");
 }
 
 function buildProductPrompt(category: string, keyword?: string): string {

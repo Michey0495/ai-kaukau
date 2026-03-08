@@ -61,6 +61,15 @@ export default async function ProductPage({ params }: Props) {
         </div>
 
         <div className="bg-white/5 rounded-xl border border-white/10 p-8 mb-6">
+          {product.imageUrl && (
+            <div className="mb-6 rounded-lg overflow-hidden border border-white/10">
+              <img
+                src={product.imageUrl}
+                alt={product.name}
+                className="w-full aspect-square object-cover"
+              />
+            </div>
+          )}
           <h1 className="text-2xl font-black text-white mb-2">
             {product.name}
           </h1>

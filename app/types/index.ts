@@ -12,6 +12,7 @@ export interface Product {
   reviews: { author: string; rating: number; comment: string }[];
   category: string;
   keyword?: string;
+  imageUrl?: string;
   createdAt: string;
 }
 
